@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="DK-da">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>JS.DOM.1</title>
+</head>
+<body>
+<form>
+    <div>
+        <label>Enter name:</label><br>
+        <input type="text" id="navn" placeholder="Your name" pattern=".{2,}" required/>
+    </div>
+    
+    <div>
+        <label for="dat">Enter date:</label>
+        <br/>
+        <input type="date" id="dato" placeholder='yyyy-mm-dd' required/>
+    </div>
+    <input type="submit" value="Send" id="submit"/>
+</form>
+    
+</body>
+<script>
+    'use strict';
+/**
+ * nQuery, *the* JS Framework
+ */
+    var $ = function (foo) {
+        return document.getElementById(foo);    // save keystrokes
+    }
+
+    //funktion laver cookie
+    function createCookie(name, value, days) {
+
+    let expires;
+    if (days) {
+        let date = new Date();
+        date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+        expires = "; expires=" + date.toGMTString();
+    }
+    else {
+        expires = "";
+    }
+    document.cookie = name + "=" + value + expires + "; path=/";
+}
+
+//læser cookie
+function readCookie(name) {
+    let nameEQ = name + "=";
+    let ca = document.cookie.split(";");
+    for (let i = 0; i < ca.length; i++) {
+        let c = ca[i];
+        while (c.charAt(0) == " ") {
+            c = c.substring(1,c.length);
+        }
+        if (c.indexOf(nameEQ) == 0) {
+            return c.substring(nameEQ.length, c.length);
+        }
+    }
+    return null;
+}
+
+//sammensætter cookie
+const validate = function(){
+    let n = $('navn').value;
+    let d = $('dato').value;
+    createCookie(n, d, 0.00694444);
+    console.log(readCookie(n));
+}
+
+$('submit').addEventListener('click', validate);
+
+document.write('<p>' + readCookie(n) + '</p>');
+
+
+</script>
+</html>
+
